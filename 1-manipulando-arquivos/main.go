@@ -12,11 +12,11 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	defer file.Close()
 
 	// Write file
 	// file.WriteString("Hello, World!")
 	file.Write([]byte("Hi, my name is Vitor Gabriel Silva Lima!"))
-	file.Close()
 
 	// Read file
 	readFile, err := os.ReadFile("./file.txt")
@@ -30,6 +30,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	defer file.Close()
 	reader := bufio.NewReader(file)
 	buffer := make([]byte, 4)
 	for {
@@ -39,7 +40,6 @@ func main() {
 		}
 		fmt.Println(string(buffer[:n]))
 	}
-	file.Close()
 
 	// Remove file
 	err = os.Remove("./file.txt")

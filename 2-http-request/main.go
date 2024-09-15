@@ -11,10 +11,10 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	defer resp.Body.Close()
 	data, err := io.ReadAll(resp.Body)
 	if err != nil {
 		panic(err)
 	}
 	fmt.Println(string(data))
-	resp.Body.Close()
 }
