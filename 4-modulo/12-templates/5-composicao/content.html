@@ -1,0 +1,14 @@
+{{ template "header.html" }}
+<table>
+    <tr>
+        <td>Nome</td>
+        <td>Idade</td>
+    </tr>
+    {{ range . }}
+    <tr>
+        <td>{{ .Name }}</td>
+        <td>{{ .Age }}</td>
+    </tr>
+    {{ end }}
+</table>
+{{ template "footer.html" }}
