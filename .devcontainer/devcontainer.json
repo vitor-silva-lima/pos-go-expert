@@ -20,6 +20,7 @@
 		"vscode": {
 			"extensions": [
 				"golang.go",
+				"ckolkman.vscode-postgres",
 				"rangav.vscode-thunder-client",
                 "streetsidesoftware.code-spell-checker",
                 "vivaxy.vscode-conventional-commits",
