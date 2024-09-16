@@ -1,0 +1,1 @@
+Todas funções que recebem um ctx context.Context, esse parametro deve vir em primeiro lugar (Convenção comunidade Go) 
