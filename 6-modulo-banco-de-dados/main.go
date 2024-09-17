@@ -2,6 +2,7 @@ package main
 
 import (
 	"database/sql"
+	"fmt"
 
 	"github.com/google/uuid"
 	_ "github.com/jackc/pgx/v5/stdlib"
@@ -38,6 +39,19 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	product, err = selectProduct(db, product.ProductId.String())
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("One Product: %+v\n", product)
+	products, err := selectAllProducts(db)
+	if err != nil {
+		panic(err)
+	}
+	for _, product := range products {
+		fmt.Printf("Product: %+v\n", product)
+	}
+
 }
 
 func insertProduct(db *sql.DB, product *Product) error {
@@ -64,4 +78,37 @@ func updateProduct(db *sql.DB, product *Product) error {
 		return err
 	}
 	return nil
+}
+
+func selectProduct(db *sql.DB, id string) (*Product, error) {
+	stmt, err := db.Prepare("SELECT product_id, name, price FROM products WHERE product_id = $1")
+	if err != nil {
+		return nil, err
+	}
+	defer stmt.Close()
+	row := stmt.QueryRow(id)
+	product := &Product{}
+	err = row.Scan(&product.ProductId, &product.Name, &product.Price)
+	if err != nil {
+		return nil, err
+	}
+	return product, nil
+}
+
+func selectAllProducts(db *sql.DB) ([]*Product, error) {
+	rows, err := db.Query("SELECT product_id, name, price FROM products")
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	products := []*Product{}
+	for rows.Next() {
+		product := &Product{}
+		err = rows.Scan(&product.ProductId, &product.Name, &product.Price)
+		if err != nil {
+			return nil, err
+		}
+		products = append(products, product)
+	}
+	return products, nil
 }
