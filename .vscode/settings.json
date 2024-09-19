@@ -4,6 +4,7 @@
         "gorm",
         "jwtauth",
         "mapstructure",
-        "stretchr"
+        "stretchr",
+        "webserver"
     ]
 }
