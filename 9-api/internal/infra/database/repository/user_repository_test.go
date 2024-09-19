@@ -2,13 +2,15 @@ package repository
 
 import (
 	"first-api/internal/entity"
+	"first-api/internal/root"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 )
 
-func TestUserRepositoryMemory_Create(t *testing.T) {
-	repo, err := NewUserRepositoryMemory()
+func TestUserRepository_Create(t *testing.T) {
+	conn := root.NewDatabaseConnectionAdapter()
+	repo, err := NewUserRepository(conn)
 	assert.NoError(t, err)
 	user, err := entity.NewUser("John Doe", "j@d.com", "123456")
 	assert.NoError(t, err)
@@ -24,8 +26,9 @@ func TestUserRepositoryMemory_Create(t *testing.T) {
 
 }
 
-func TestUserRepositoryMemory_GetByEmail(t *testing.T) {
-	repo, err := NewUserRepositoryMemory()
+func TestUserRepository_GetByEmail(t *testing.T) {
+	conn := root.NewDatabaseConnectionAdapter()
+	repo, err := NewUserRepository(conn)
 	assert.NoError(t, err)
 	user, err := entity.NewUser("John Doe", "j@d.com", "123456")
 	assert.NoError(t, err)
