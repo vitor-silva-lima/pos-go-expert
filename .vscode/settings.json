@@ -1,5 +1,6 @@
 {
     "cSpell.words": [
+        "gorm",
         "jwtauth",
         "mapstructure",
         "stretchr"
