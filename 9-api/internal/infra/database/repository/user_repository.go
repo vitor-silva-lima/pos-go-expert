@@ -7,24 +7,24 @@ import (
 	"gorm.io/gorm"
 )
 
-type UserRepository struct {
+type UserRepositoryImpl struct {
 	db *gorm.DB
 }
 
-func NewUserRepository(connection database.ConnectionAdapter) (*UserRepository, error) {
+func NewUserRepository(connection database.ConnectionAdapter) (*UserRepositoryImpl, error) {
 	db, err := connection.Connect()
 	if err != nil {
 		return nil, err
 	}
 	db.AutoMigrate(&entity.User{})
-	return &UserRepository{db: db}, nil
+	return &UserRepositoryImpl{db: db}, nil
 }
 
-func (r *UserRepository) Create(user *entity.User) error {
+func (r *UserRepositoryImpl) Create(user *entity.User) error {
 	return r.db.Create(user).Error
 }
 
-func (r *UserRepository) GetByEmail(email string) (*entity.User, error) {
+func (r *UserRepositoryImpl) GetByEmail(email string) (*entity.User, error) {
 	var user entity.User
 	if err := r.db.Where("email = ?", email).First(&user).Error; err != nil {
 		return nil, err
